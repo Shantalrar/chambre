@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuadrantes Interactivos</title>
+  <link rel="stylesheet" href="style.css">
+ 
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 1fr 2fr 1fr;
+      gap: 5px;
+      width: 90vw;
+      height: 90vh;
+    }
+
+   .quadrant {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid  #dbe0d2;
+
+         background-color: #f3fae7;
+
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quadrant img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #ventana {
+      grid-column: span 2;
+      grid-row: 1;
+    }
+
+    #cama {
+      grid-column: 1;
+      grid-row: 2;
+      position: relative;
+    }
+
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #almohada, #cobija {
+      position: absolute;
+    }
+
+    #almohada {
+      top: 10%;
+      left: 10%;
+      width: 30%;
+      height: 30%;
+    }
+
+    #cobija {
+      bottom: 0;
+      right: 0;
+      width: 50%;
+      height: 50%;
+    }
+
+    .bubble {
+      position: absolute;
+      background-color: rgba(191, 130, 130, 0.529);
+      border: 1px solid #f5a2a2;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      pointer-events: none;
+    }
+    #bubbleInput {
+  width: 80%; /* Ajusta el ancho del input */
+  font-size: 12px;
+    box-sizing: border-box; /* Asegura que el padding no afecta el tamaño total */
+}
+#armario {
+      grid-column:  span 2;
+      grid-row: 3;
+    }
+
+    #celular {
+      grid-column:2;
+      grid-row: 2;
+    }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Ventana -->
+    <div class="quadrant" id="ventana" onclick="changeState('ventana'); playMusic();">
+      <img src="ventana001.gif" alt="Ventana" id="ventanaImg">
+     
+    </div>
+
+    <!-- Cama -->
+    <div class="quadrant" id="cama">
+      <img src="cama001.gif" alt="Cama" id="camaImg">
+      <div class="overlay" id="almohada" onclick="changeState('almohada'); playsonidoalmohada();">
+        <img src="almohada001.gif" alt="Almohada" id="almohadaImg">
+      </div>
+      <div class="overlay" id="cobija" onclick="changeState('cobija')">
+        <input type="text" id="bubbleInput" placeholder="Et la couverture attend que le secret lui soit révélé..." onkeypress="checkEnter(event)">
+
+      </div>
+    </div>
+
+    <!-- Armario -->
+    <div class="quadrant" id="armario" onclick="changeState('armario'); playsonidoarmario();">
+      <img src="armario001.gif" alt="Armario" id="armarioImg">
+    </div>
+
+    <!-- Celular -->
+    <div class="quadrant" id="celular" onclick="changeState('celular'); playsonidocelu();">
+      <img src="celular001.gif" alt="Celular" id="celularImg">
+       
+    </div>
+  </div>
+  <audio id="backgroundMusic">
+    <source src="sonido0010.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  <audio id="bubbleSound">
+    <source src="sonido002.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  <audio id="sonidoalmohada">
+    <source src="sonido003.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  <audio id="sonidocelu">
+    <source src="sonido004.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  <audio id="sonidoarmario" autoplay loop >
+    <source src="sonido005.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script>
+
+const music = document.getElementById('backgroundMusic');
+const bubbleSound = document.getElementById('bubbleSound');
+
+  function playMusic() {
+    music.play();
+  }
+
+  function pauseMusic() {
+    music.pause();
+  }
+
+    function generateImageArray(baseName, count) {
+      const images = [];
+      for (let i = 1; i <= count; i++) {
+        const number = i.toString().padStart(3, '0');
+        images.push(`${baseName}${number}.gif`);
+      }
+      return images;
+    }
+
+    const states = {
+ ventana: generateImageArray('ventana', 111),
+      almohada: generateImageArray('almohada', 16),
+      cobija: generateImageArray('cobija', 1),
+      armario: generateImageArray('armario', 1),
+      celular: generateImageArray('celular', 13)
+    };
+
+    const currentIndex = {
+      ventana: 0,
+      almohada: 0,
+      cobija: 0,
+      armario: 0,
+      celular: 0
+    };
+
+    function changeState(id) {
+      currentIndex[id] = (currentIndex[id] + 1) % states[id].length;
+      document.getElementById(`${id}Img`).src = states[id][currentIndex[id]];
+    }
+
+    function checkEnter(event) {
+  if (event.key === 'Enter') {
+    addBubble();
+  }
+}
+function playBubbleSound() {
+    bubbleSound.currentTime = 0; // Reinicia el audio
+    bubbleSound.play();
+  }
+  function playsonidoalmohada() {
+    sonidoalmohada.currentTime = 0; // Reinicia el audio
+    sonidoalmohada.play();
+  }
+  function playsonidocelu() {
+    sonidocelu.currentTime = 0; // Reinicia el audio
+    sonidocelu.play();
+  }
+  function playsonidoarmario() {
+    sonidoarmario.currentTime = 0; // Reinicia el audio
+    sonidoarmario.play();
+  }
+function addBubble() {
+  const text = document.getElementById('bubbleInput').value;
+  if (text.trim() === '') return;
+
+  const bubble = document.createElement('div');
+  bubble.classList.add('bubble');
+  bubble.textContent = text;
+
+  const cobija = document.getElementById('cobija');
+  bubble.style.top = Math.random() * 80 + '%';
+  bubble.style.left = Math.random() * 80 + '%';
+  cobija.appendChild(bubble);
+
+  document.getElementById('bubbleInput').value = ''; // Limpia el campo de texto
+  playBubbleSound();
+}
+  </script>
+  
+</body>
+</html>
