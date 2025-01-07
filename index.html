@@ -47,12 +47,12 @@
       object-fit: cover;
     }
 
-    #ventana {
+    #Ventana {
       grid-column: span 2;
       grid-row: 1;
     }
 
-    #cama {
+    #Cama {
       grid-column: 1;
       grid-row: 2;
       position: relative;
@@ -67,18 +67,18 @@
       align-items: center;
     }
 
-    #almohada, #cobija {
+    #Almohada, #Cobija {
       position: absolute;
     }
 
-    #almohada {
+    #Almohada {
       top: 10%;
       left: 10%;
       width: 30%;
       height: 30%;
     }
 
-    #cobija {
+    #Cobija {
       bottom: 0;
       right: 0;
       width: 50%;
@@ -99,12 +99,12 @@
   font-size: 12px;
     box-sizing: border-box; /* Asegura que el padding no afecta el tamaño total */
 }
-#armario {
+#Armario {
       grid-column:  span 2;
       grid-row: 3;
     }
 
-    #celular {
+    #Celular {
       grid-column:2;
       grid-row: 2;
     }
@@ -114,31 +114,31 @@
 <body>
   <div class="container">
     <!-- Ventana -->
-    <div class="quadrant" id="ventana" onclick="changeState('ventana'); playMusic();">
-      <img src="Ventana001.gif" alt="Ventana" id="ventanaImg">
+    <div class="quadrant" id="Ventana" onclick="changeState('ventana'); playMusic();">
+      <img src="Ventana001.gif" alt="Ventana" id="VentanaImg">
      
     </div>
 
     <!-- Cama -->
-    <div class="quadrant" id="cama">
-      <img src="cama001.gif" alt="Cama" id="camaImg">
-      <div class="overlay" id="almohada" onclick="changeState('almohada'); playsonidoalmohada();">
-        <img src="Almohada001.gif" alt="Almohada" id="almohadaImg">
+    <div class="quadrant" id="Cama">
+      <img src="cama001.gif" alt="Cama" id="CamaImg">
+      <div class="overlay" id="Almohada" onclick="changeState('almohada'); playsonidoalmohada();">
+        <img src="Almohada001.gif" alt="Almohada" id="AlmohadaImg">
       </div>
-      <div class="overlay" id="cobija" onclick="changeState('cobija')">
+      <div class="overlay" id="Cobija" onclick="changeState('cobija')">
         <input type="text" id="bubbleInput" placeholder="Et la couverture attend que le secret lui soit révélé..." onkeypress="checkEnter(event)">
 
       </div>
     </div>
 
     <!-- Armario -->
-    <div class="quadrant" id="armario" onclick="changeState('armario'); playsonidoarmario();">
-      <img src="Armario001.gif" alt="Armario" id="armarioImg">
+    <div class="quadrant" id="Armario" onclick="changeState('armario'); playsonidoarmario();">
+      <img src="Armario001.gif" alt="Armario" id="ArmarioImg">
     </div>
 
     <!-- Celular -->
-    <div class="quadrant" id="celular" onclick="changeState('celular'); playsonidocelu();">
-      <img src="Celular001.gif" alt="Celular" id="celularImg">
+    <div class="quadrant" id="Celular" onclick="changeState('celular'); playsonidocelu();">
+      <img src="Celular001.gif" alt="Celular" id="CelularImg">
        
     </div>
   </div>
@@ -186,19 +186,19 @@ const bubbleSound = document.getElementById('bubbleSound');
     }
 
     const states = {
- ventana: generateImageArray('ventana', 111),
-      almohada: generateImageArray('almohada', 16),
-      cobija: generateImageArray('cobija', 1),
-      armario: generateImageArray('armario', 1),
-      celular: generateImageArray('celular', 13)
+ ventana: generateImageArray('Ventana', 111),
+      almohada: generateImageArray('Almohada', 16),
+      cobija: generateImageArray('Cobija', 1),
+      armario: generateImageArray('Armario', 1),
+      celular: generateImageArray('Celular', 13)
     };
 
     const currentIndex = {
-      ventana: 0,
-      almohada: 0,
-      cobija: 0,
-      armario: 0,
-      celular: 0
+      Ventana: 0,
+      Almohada: 0,
+      Cobija: 0,
+      Armario: 0,
+      Celular: 0
     };
 
     function changeState(id) {
